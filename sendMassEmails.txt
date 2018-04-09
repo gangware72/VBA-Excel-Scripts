@@ -1,0 +1,95 @@
+Sub sendMassEmail()
+'Author Edgar Gangware, 2018
+
+
+Dim lastCustomer As Long
+Dim currentCustomer As Long
+Dim outlookApp As Outlook.Application
+Dim outlookMail As Outlook.MailItem
+Dim none As String
+Dim writeCounter As Integer
+Dim Ebody As String
+
+
+'Things you need to do to get this working: (Might be slightly different from MAC/PC)
+'              (1) On Excel, click "Excel" on the topmost ribbon, scroll down to "Preferences" to open it
+'              (2) Find the place where you can add elements on to the Excel ribbon, add the "Developer" tab (Other tabs are "Home", "Layout"
+'              (3) Once your are on the "Developer Tab" the topmost Excel ribbon will include a section called "Tools"
+'              (4) Click on "Tools" scroll down to "References" and open it
+'              (5) Click the check box next too "Microsoft Outlook 14.0 (it can be any version, 15.0, etc.) Object Library"
+'
+'
+'Here is how this works:
+'               (1) The script goes line by line and grabs the relevant email
+'               (2) The script inserts that information into an email detailed in this script
+'               (3) It loops and ends
+
+'Here is what you need to do:
+'               (1) Modify the message to say what you want
+'               (2) Send me an email (from work) so I can make the emails you send out mirror the signature you normally use
+
+'Before each use:
+ '               (1) Set lastCustomer to the row your last customer appears in
+                
+                                lastCustomer = 90
+                                
+                                'If you just want it to always pick the last row use this instead
+                                'lastCustomer = Sheets("Client List").Cells(Rows.count, "B").End(xlUp).Row 'finds the last row
+                
+'                (2) Change the .Subject = "New Subject You Want" (i.e. Hot Load LAX-CHI $1/mile)
+'                (3) Set the .BCC for who you want (You can add .CC just above it the same way .BCC is done
+
+
+
+For currentCustomer = 3 To lastCustomer Step 1
+    
+    
+
+        Set outlookApp = New Outlook.Application
+        Set outlookMail = outlookApp.CreateItem(olMailItem)
+
+
+
+         With outlookMail
+          .To = Cells(lngLoopCtrl, "D").Value
+          .Subject = "GS1 Barcode Service - follow-up"
+          .BCC = "vidrio24@gmail.com"
+          .Categories = "Test"
+          .Display
+          .HTMLBody = "Hi " & Cells(lngLoopCtrl, "B").Value & "," & "<br><br>" _
+           & "Our GS1 Barcode Service clients have access to certified Standards and Barcode Professional consultants who can assist with product identification needs.  If you have any questions about GS1 US membership or UPC barcoding, please feel free to get back to me so I can connect you with a consultant. For continued use of your unique GS1 Company Prefix,  you will be required to pay GS1 US annual membership renewal fee which will be coming due within the next 60 days." & "<br><br>" _
+          & "GS1 US normally sends out notices at this time reminding members to keep current with their account.  If you have not received any notice, you can log in to the GS1 US member portal at " & "<a href='https://members.gs1us.org/'>" & "https://members.gs1us.org/" & "</a>" & ". Once you log in to the portal, please click on the 'Pay My Bill' link to complete the renewal process.  Please note, this mandatory renewal fee is from GS1 US and not Bar Code Graphics. If you require any future assistance with digital files, labels or product data management, a Bar Code Graphics consultant can provide information on how we can continue to assist." & "<br><br>" _
+          & "Please do not hesitate to contact me if you have any questions and/or would like to schedule a call with a consultant." & "<br><br> " _
+          & "Sincerely," & "<br><br>" _
+          & "Eddie Gangware" & "<br><br>" _
+          & "<p style='font-size:90%; color:rgb(24,55,106)'>" & "________________________________________________________________________" & "</p>" _
+          & "<h1 style='font-size:150%; margin-bottom:0px;color:rgb(24,55,106)'><face='calibri'>" & "Bar Code Graphics Inc" & "</font></h1>" _
+          & "<p style='font-size:90%;margin:0px; color:rgb(11,90,178)'><font face='century gothic'><a href='http://www.createbarcodes.com/index.aspx?AspxAutoDetectCookieSupport=1' style='margin:0px;font-size:90%;color:rgb(109,109,109)'>" & "Digital Files" & "</a> &nbsp" & ">" & "&nbsp <a href='http://www.orderbarcodelabels.com/' style='margin:0px;font-size:90%;color:rgb(109,109,109)'>" & "Printed Labels" & "</a> &nbsp" & ">" & "&nbsp <a href='http://www.symboltest.com/' style='margin:0px;font-size:90%;color:rgb(109,109,109)'>" & "Barcode Testing" & "</a></p>" _
+          & "<p style='margin:0px;font-size:90%;text-align:top;color:rgb(24,55,106)'><face='Century Gothic'>" & "<br>" & "Eddie G." & "</p>" _
+          & "<p style='margin:0px;font-size:70%;color:rgb(128,38,39)'><face='Century Gothic'>" & "Customer Service" & "<br><br></p>" _
+          & "<p style='margin:0px;font-size:70%;color:rgb(109,109,109)'><font face='century gothic'>" & "65 E Wacker Pl." & "</p>" _
+          & "<p style='margin:0px;font-size:70%;color:rgb(109,109,109)'><font face='century gothic'>" & "Chicago, IL 60601" & "</p>" _
+          & "<p style='margin:0px;font-size:70%;color:rgb(24,55,106)'><font face='century gothic'>" & "1-800-662-0701 ext 156" & "</p>" _
+          & "<p style='margin:0px;font-size:70%;color:rgb(109,109,109)'><font face='century gothic'>" & "312.664.4939 fax" & "</p>" _
+          & "<p style='margin:0px'><a style='font-size:70%;margin:0px' href='eddie@barcode-us.com'>" & "eddie@barcode-us.com" & "</a></p>" _
+          & "<p style='margin:0px'><a style='font-size:70%;margin:0px' href='www.barcode.graphics.com'>" & "www.barcode.graphics" & "</a></p>"
+         
+          
+         
+
+          
+
+          
+          
+          
+          .Send
+        
+        
+     
+    End With
+        
+        
+        Next
+        
+
+End Sub
